@@ -89,11 +89,11 @@ src/
 - Disconnect Wallet  
 - Display ETH Balance  
 - Error handling (no MetaMask / rejected request)  
-
+- Auto-detect account or network changes (`accountsChanged`, `chainChanged`)  
 ---
 
 ## 🔮 Possible Improvements
-- Auto-detect account or network changes (`accountsChanged`, `chainChanged`)  
+
 - Add support for multiple wallet providers  
 - Improve styling with TailwindCSS or Material UI  
 
