@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { ethers } from "ethers";
 
 const WalletContext = createContext(null);
@@ -6,10 +6,11 @@ const WalletContext = createContext(null);
 export function WalletProvider({ children }) {
   const [address, setAddress] = useState(null);
   const [balance, setBalance] = useState(null);
+  const [chainId, setChainId] = useState(null);
 
   async function connect() {
     if (!window.ethereum) {
-      alert("MetaMask não encontrada! Instale a extensão.");
+      alert("MetaMask not found! Install it first.");
       return;
     }
 
@@ -19,28 +20,43 @@ export function WalletProvider({ children }) {
       const signer = await provider.getSigner();
       const addr = await signer.getAddress();
       const bal = await provider.getBalance(addr);
+      const network = await provider.getNetwork();
 
       setAddress(addr);
       setBalance(ethers.formatEther(bal));
+      setChainId(network.chainId.toString());
     } catch (error) {
-      console.error("Erro ao conectar carteira:", error);
+      console.error("Wallet connect error:", error);
     }
   }
 
   function disconnect() {
     setAddress(null);
     setBalance(null);
+    setChainId(null);
   }
 
+  // Auto detect account / network changes
+  useEffect(() => {
+    if (window.ethereum) {
+      window.ethereum.on("accountsChanged", (accounts) => {
+        if (accounts.length === 0) disconnect();
+        else setAddress(accounts[0]);
+      });
+
+      window.ethereum.on("chainChanged", (_chainId) => {
+        setChainId(_chainId);
+      });
+    }
+  }, []);
+
   return (
-    <WalletContext.Provider value={{ address, balance, connect, disconnect }}>
+    <WalletContext.Provider value={{ address, balance, chainId, connect, disconnect }}>
       {children}
     </WalletContext.Provider>
   );
 }
 
 export function useWallet() {
-  const ctx = useContext(WalletContext);
-  if (!ctx) throw new Error("useWallet deve ser usado dentro de WalletProvider");
-  return ctx;
+  return useContext(WalletContext);
 }
