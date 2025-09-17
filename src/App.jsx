@@ -6,11 +6,11 @@ function App() {
   return (
     <WalletProvider>
       <div style={{
-        width: "100vw",           // largura total
-        height: "100vh",          // altura total
+        width: "100vw",           // full width
+        height: "100vh",          // full height
         display: "flex",
-        justifyContent: "center", // centralizar horizontal
-        alignItems: "center",     // centralizar vertical
+        justifyContent: "center", // center horizontally
+        alignItems: "center",     // center vertically
         flexDirection: "column",
         background: "linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)",
         color: "#fff",
@@ -20,10 +20,10 @@ function App() {
         padding: 0
       }}>
         <h1 style={{ fontSize: "2.5rem", marginBottom: "10px" }}>
-          🚀 Web3 - Conectar MetaMask
+          🚀 Web3 - Connect MetaMask
         </h1>
         <p style={{ marginBottom: "30px", fontSize: "1.2rem", opacity: 0.9 }}>
-          Clique abaixo para conectar sua carteira Ethereum
+          Click below to connect your Ethereum wallet
         </p>
         <WalletButton />
       </div>

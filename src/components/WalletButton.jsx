@@ -36,15 +36,15 @@ export function WalletButton() {
     <div style={boxStyle}>
       {address ? (
         <div>
-          <p><strong>Carteira:</strong> <br /> {address}</p>
-          <p><strong>Saldo:</strong> {balance} ETH</p>
+          <p><strong>Wallet:</strong> <br /> {address}</p>
+          <p><strong>Balance:</strong> {balance} ETH</p>
           <button onClick={disconnect} style={buttonDisconnect}>
-            Desconectar
+            Disconnect
           </button>
         </div>
       ) : (
         <button onClick={connect} style={buttonStyle}>
-          🔗 Conectar Carteira (MetaMask)
+          🔗 Connect Wallet (MetaMask)
         </button>
       )}
     </div>
